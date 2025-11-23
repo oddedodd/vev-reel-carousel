@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styles from "./ReelCarousel.module.css";
 import { registerVevComponent } from "@vev/react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 type Props = {
   title: string;
@@ -74,7 +79,7 @@ const ReelCarousel = ({
   if (!sheetUrl || sheetUrl === "enter spreadsheet url" || sheetUrl.trim() === "") {
     return (
       <div className={styles.wrapper}>
-        <h1>Hello, {title} - how are you doing?</h1>
+        <h2>Hello, {title} - how are you doing?</h2>
         <p>Please add Spreadsheet URL</p>
       </div>
     );
@@ -92,21 +97,32 @@ const ReelCarousel = ({
   return (
     <div className={styles.wrapper}>
       <h1>{title}</h1>
-      {reels.map((reel) => (
-        <div key={reel.id}>
-          <h2>{reel.title}</h2>
-          <div className={styles.videoContainer}>
-            <iframe
-              className={styles.video}
-              src={getVimeoEmbedUrl(reel.video)}
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-              title={reel.title}
-              frameBorder="0"
-            />
-          </div>
-        </div>
-      ))}
+      <Swiper
+        modules={[Navigation, Pagination]}
+        spaceBetween={20}
+        slidesPerView={3}
+        navigation={true}
+        pagination={{ clickable: true }}
+        className={styles.carousel}
+      >
+        {reels.map((reel) => (
+          <SwiperSlide key={reel.id}>
+            <div className={styles.slide}>
+              <h2>{reel.title}</h2>
+              <div className={styles.videoContainer}>
+                <iframe
+                  className={styles.video}
+                  src={getVimeoEmbedUrl(reel.video)}
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  title={reel.title}
+                  frameBorder="0"
+                />
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 };
@@ -128,11 +144,7 @@ registerVevComponent(ReelCarousel, {
     },
     {
       selector: styles.videoContainer,
-      properties: ["height"],
-    },
-    {
-      selector: styles.video,
-      properties: ["border-radius"],
+      properties: ["height", "border-radius"],
     },
   ],
   type: 'standard',
