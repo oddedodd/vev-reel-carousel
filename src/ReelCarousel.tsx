@@ -152,7 +152,7 @@ registerVevComponent(ReelCarousel, {
     },
     {
       selector: styles.videoContainer,
-      properties: ["height", "border-radius"],
+      properties: ["height", "border-radius", "box-shadow"],
     },
   ],
   type: 'standard',
