@@ -96,7 +96,7 @@ const ReelCarousel = ({
 
   return (
     <div className={styles.wrapper}>
-      <h1>{title}</h1>
+      <h2 className={styles.carouselTitle}>{title}</h2>
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={20}
@@ -108,7 +108,7 @@ const ReelCarousel = ({
         {reels.map((reel) => (
           <SwiperSlide key={reel.id}>
             <div className={styles.slide}>
-              <h2>{reel.title}</h2>
+              <h2 className={styles.reelTitle}>{reel.title}</h2>
               <div className={styles.videoContainer}>
                 <iframe
                   className={styles.video}
@@ -141,6 +141,14 @@ registerVevComponent(ReelCarousel, {
     {
       selector: styles.wrapper,
       properties: ["background"],
+    },
+    {
+      selector: styles.carouselTitle,
+      properties: ["color", "font-size", "font-weight", "font-family", "text-align", "margin", "padding"],
+    },
+    {
+      selector: styles.reelTitle,
+      properties: ["color", "font-size", "font-weight", "font-family", "text-align", "margin", "padding"],
     },
     {
       selector: styles.videoContainer,

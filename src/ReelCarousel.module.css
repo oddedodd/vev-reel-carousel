@@ -9,12 +9,20 @@
   padding: 2rem 0;
 }
 
+.carouselTitle {
+  margin: 0 0 1rem 0;
+}
+
 .slide {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+
+.reelTitle {
+  margin: 0 0 1rem 0;
 }
 
 /* Ensure Swiper slides don't interfere with border-radius */
