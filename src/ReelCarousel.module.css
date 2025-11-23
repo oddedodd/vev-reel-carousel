@@ -6,7 +6,7 @@
 
 .videoContainer {
   height: 640px;
-  width: 360px;
+  aspect-ratio: 9 / 16;
   overflow: hidden;
   position: relative;
 }

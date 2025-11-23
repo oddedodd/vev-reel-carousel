@@ -128,7 +128,7 @@ registerVevComponent(ReelCarousel, {
     },
     {
       selector: styles.videoContainer,
-      properties: ["width", "height"],
+      properties: ["height"],
     },
     {
       selector: styles.video,
