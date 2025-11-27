@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import styles from "./ReelCarousel.module.css";
 import { registerVevComponent } from "@vev/react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination";
 
 type Props = {
   title: string;
@@ -89,7 +88,7 @@ const ReelCarousel = ({
     return (
       <div className={styles.wrapper}>
         <h1>Reels Carousel</h1>
-        <p>Loading reels...</p>
+        <p>Loading reels... bonanza</p>
       </div>
     );
   }
@@ -98,11 +97,17 @@ const ReelCarousel = ({
     <div className={styles.wrapper}>
       <h2 className={styles.carouselTitle}>{title}</h2>
       <Swiper
-        modules={[Navigation, Pagination]}
+        modules={[Navigation]}
         spaceBetween={20}
         slidesPerView={3}
         navigation={true}
-        pagination={{ clickable: true }}
+        pagination={false}
+        allowTouchMove={true}
+        simulateTouch={true}
+        grabCursor={true}
+        touchEventsTarget="container"
+        touchRatio={1}
+        touchAngle={45}
         className={styles.carousel}
       >
         {reels.map((reel) => (
