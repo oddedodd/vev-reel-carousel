@@ -33,28 +33,38 @@ const parseCSV = (csvText: string): Reel[] => {
 
   if (urlIndex === -1) return [];
 
-  return lines.slice(1).map((line, index) => {
-    const values = line.split(",").map((v) => v.trim());
-    const url = values[urlIndex] || "";
-    const title = titleIndex !== -1 ? values[titleIndex] || `Reel ${index + 1}` : `Reel ${index + 1}`;
+  return lines
+    .slice(1)
+    .map((line, index) => {
+      const values = line.split(",").map((v) => v.trim());
+      const url = values[urlIndex] || "";
+      const title =
+        titleIndex !== -1
+          ? values[titleIndex] || `Reel ${index + 1}`
+          : `Reel ${index + 1}`;
 
-    return {
-      id: index + 1,
-      title,
-      video: url,
-    };
-  }).filter((reel) => reel.video); // Filter out rows without URLs
+      return {
+        id: index + 1,
+        title,
+        video: url,
+      };
+    })
+    .filter((reel) => reel.video); // Filter out rows without URLs
 };
 
-const ReelCarousel = ({ 
-  title = "Vev", 
-  sheetUrl = "enter spreadsheet url" 
+const ReelCarousel = ({
+  title = "Vev",
+  sheetUrl = "enter spreadsheet url",
 }: Props) => {
   const [reels, setReels] = useState<Reel[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!sheetUrl || sheetUrl === "enter spreadsheet url" || sheetUrl.trim() === "") {
+    if (
+      !sheetUrl ||
+      sheetUrl === "enter spreadsheet url" ||
+      sheetUrl.trim() === ""
+    ) {
       setLoading(false);
       return;
     }
@@ -76,7 +86,11 @@ const ReelCarousel = ({
     fetchReels();
   }, [sheetUrl]);
 
-  if (!sheetUrl || sheetUrl === "enter spreadsheet url" || sheetUrl.trim() === "") {
+  if (
+    !sheetUrl ||
+    sheetUrl === "enter spreadsheet url" ||
+    sheetUrl.trim() === ""
+  ) {
     return (
       <div className={styles.wrapper}>
         <h2>Hello, {title} - how are you doing?</h2>
@@ -88,8 +102,10 @@ const ReelCarousel = ({
   if (loading) {
     return (
       <div className={styles.wrapper}>
-        <h1>Reels Carousel</h1>
-        <p>Loading reels...</p>
+        <div className={styles.loadingContainer}>
+          <div className={styles.spinner}></div>
+          <p>Laster inn reels...</p>
+        </div>
       </div>
     );
   }
@@ -100,9 +116,23 @@ const ReelCarousel = ({
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={20}
-        slidesPerView={3}
+        slidesPerView={1}
         navigation={true}
         pagination={{ clickable: true }}
+        breakpoints={{
+          640: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
+        }}
         className={styles.carousel}
       >
         {reels.map((reel) => (
@@ -131,10 +161,10 @@ registerVevComponent(ReelCarousel, {
   name: "ReelCarousel",
   props: [
     { name: "title", type: "string", initialValue: "Vev" },
-    { 
-      name: "sheetUrl", 
-      type: "string", 
-      initialValue: "enter spreadsheet url" 
+    {
+      name: "sheetUrl",
+      type: "string",
+      initialValue: "enter spreadsheet url",
     },
   ],
   editableCSS: [
@@ -144,18 +174,34 @@ registerVevComponent(ReelCarousel, {
     },
     {
       selector: styles.carouselTitle,
-      properties: ["color", "font-size", "font-weight", "font-family", "text-align", "margin", "padding"],
+      properties: [
+        "color",
+        "font-size",
+        "font-weight",
+        "font-family",
+        "text-align",
+        "margin",
+        "padding",
+      ],
     },
     {
       selector: styles.reelTitle,
-      properties: ["color", "font-size", "font-weight", "font-family", "text-align", "margin", "padding"],
+      properties: [
+        "color",
+        "font-size",
+        "font-weight",
+        "font-family",
+        "text-align",
+        "margin",
+        "padding",
+      ],
     },
     {
       selector: styles.videoContainer,
       properties: ["height", "border-radius", "box-shadow"],
     },
   ],
-  type: 'standard',
+  type: "standard",
 });
 
 export default ReelCarousel;
