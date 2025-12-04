@@ -69,8 +69,22 @@
 
 .carousel :global(.swiper-button-next::after),
 .carousel :global(.swiper-button-prev::after) {
-  font-size: 20px;
-  font-weight: bold;
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.carousel :global(.swiper-button-next::after) {
+  border-width: 8px 0 8px 12px;
+  border-color: transparent transparent transparent #000;
+  margin-left: 2px;
+}
+
+.carousel :global(.swiper-button-prev::after) {
+  border-width: 8px 12px 8px 0;
+  border-color: transparent #000 transparent transparent;
+  margin-right: 2px;
 }
 
 /* Pagination dots styling */
